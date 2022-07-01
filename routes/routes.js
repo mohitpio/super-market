@@ -8,8 +8,8 @@ module.exports = router;
 //Get all
 router.get('/getAll', async (req, res) => {
     try{
-        const data = await Model.find();
-        res.json(data)
+        const item = await Model.find();
+        res.json(item)
     }
     catch(error){
         res.status(500).json({message: error.message})
@@ -19,27 +19,11 @@ router.get('/getAll', async (req, res) => {
 //Get by ID Method
 router.get('/getOne/:id', async (req, res) => {
     try{
-        const data = await Model.findById(req.params.id);
-        res.json(data)
+        const item = await Model.findById(req.params.id);
+        res.json(item)
     }
     catch(error){
         res.status(500).json({message: error.message})
-    }
-})
-
-//Post Method
-router.post('/post', async (req, res) => {
-    const data = new Model({
-        name: req.body.name,
-        age: req.body.age
-    })
-
-    try {
-        const dataToSave = await data.save();
-        res.status(200).json(dataToSave)
-    }
-    catch (error) {
-        res.status(400).json({message: error.message})
     }
 })
 
@@ -65,8 +49,8 @@ router.patch('/update/:id', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await Model.findByIdAndDelete(id)
-        res.send(`Document with ${data.name} has been deleted..`)
+        const item = await Model.findByIdAndDelete(id)
+        res.send(`Item with ${item.name} has been deleted..`)
     }
     catch (error) {
         res.status(400).json({ message: error.message })
@@ -75,16 +59,16 @@ router.delete('/delete/:id', async (req, res) => {
 
 
 //Post Method
-router.post('/post/item', async (req, res) => {
-    const data = new Model({
+router.post('/post', async (req, res) => {
+    const item = new Model({
         name: req.body.name,
         cost: req.body.cost,
         description: req.body.description,
     })
 
     try {
-        const dataToSave = await data.save();
-        res.status(200).json(dataToSave)
+        const itemToSave = await item.save();
+        res.status(200).json(itemToSave)
     }
     catch (error) {
         res.status(400).json({message: error.message})
